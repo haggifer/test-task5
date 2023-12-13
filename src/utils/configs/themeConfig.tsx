@@ -1,5 +1,5 @@
+import { Color } from "@mui/material";
 import { ThemeOptions } from "@mui/material/styles";
-import { PaletteColor, PaletteColorOptions } from "@mui/material";
 
 declare module '@mui/material/styles' {
   interface Theme {
@@ -15,19 +15,16 @@ declare module '@mui/material/styles' {
     palette?: PaletteOptions,
     extra?: {
       headerHeight: number,
-      footerHeight: number,
       maxContentWidth: number,
     },
   }
 
   interface Palette {
-    primary: PaletteColor,
-    accent: Record<number, string>,
+    primarySpectrum: Omit<Color, 'A100' | 'A200' | 'A400' | 'A700'>,
   }
 
   interface PaletteOptions {
-    primary?: PaletteColorOptions,
-    accent: Record<number, string>,
+    primarySpectrum?: Omit<Color, 'A100' | 'A200' | 'A400' | 'A700'>,
   }
 }
 
@@ -52,25 +49,21 @@ export const themeConfig: ThemeOptions = {
     },
   },
   palette: {
-    primary: {
-      main: '#294eb5',
+    primarySpectrum: {
+      50: '#e3f2fd',
+      100: '#bbdefb',
+      200: '#90caf9',
+      300: '#64b5f6',
+      400: '#42a5f5',
+      500: '#2196f3',
+      600: '#1e88e5',
+      700: '#1976d2',
+      800: '#1565c0',
+      900: '#0d47a1',
     },
-    accent: {
-      50: '#e7e9f6',
-      100: '#c2c9e9',
-      200: '#99a6d9',
-      300: '#7083cb',
-      400: '#4f68c0',
-      500: '#294eb5',
-      600: '#2247ab',
-      700: '#163d9f',
-      800: '#073394',
-      900: '#00217f',
-    }
   },
   extra: {
     headerHeight: 100,
-    footerHeight: 100,
-    maxContentWidth: 1000,
+    maxContentWidth: 1200,
   }
 }

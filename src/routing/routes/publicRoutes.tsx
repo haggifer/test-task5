@@ -1,6 +1,5 @@
 import { RouteObject } from "react-router-dom";
-import React from "react";
-import Home from "../../pages/public/Home/Home";
+import Files from "../../pages/public/Files/Files";
 
 export const defaultPublicPath = '/';
 
@@ -8,7 +7,7 @@ export const publicRoutes: RouteObject[] = [
   {
     path: '/',
     element: (
-      <Home/>
+      <Files/>
     ),
   },
 ]

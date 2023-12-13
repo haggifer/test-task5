@@ -1,6 +1,5 @@
-import PageLayout from "../components/layout/PageLayout/PageLayout";
-import React from "react";
 import { createBrowserRouter } from "react-router-dom";
+import PageLayout from "../components/layout/PageLayout/PageLayout";
 import { publicRoutes } from "./routes/publicRoutes";
 import { serviceRoutes } from "./routes/serviceRoutes";
 

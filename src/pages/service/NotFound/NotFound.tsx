@@ -1,7 +1,6 @@
+import { Box, Button, Typography } from "@mui/material";
+import { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
-import React, { ReactElement } from "react";
-import classes from './NotFound.module.scss'
-import { Box, Button } from "@mui/material";
 import { defaultPublicPath } from "../../../routing/routes/publicRoutes";
 
 export default function NotFound(): ReactElement {
@@ -16,12 +15,35 @@ export default function NotFound(): ReactElement {
   }
 
   return (
-    <Box className={classes.wrapper}>
-      <Box className={classes.container}>
-        <h1 className={classes.code}>404</h1>
-        <h2 className={classes.message}>Page not found!</h2>
+    <Box sx={() => ({
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    })}>
+      <Box sx={{
+        display: 'flex',
+        flexFlow: 'column nowrap',
+        alignItems: 'center',
+      }}>
+        <Typography component="h1" sx={{
+          fontSize: '150px',
+          lineHeight: '1',
+          color: '#ff000266',
+        }}>404</Typography>
+        <Typography component="h2" sx={{
+          marginBottom: '20px',
+          fontSize: '35px',
+          lineHeight: '1',
+          color: '#ff000266',
+        }}>Page not found!</Typography>
 
-        <Box className={classes.buttons}>
+        <Box sx={{
+          '> *:not(:first-child)': {
+            marginLeft: '10px',
+          }
+        }}>
           <Button
             variant="outlined"
             onClick={goPrevPage}

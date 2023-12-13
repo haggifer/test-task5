@@ -52,6 +52,7 @@ export const CommonSelect = <Option, IsMulti extends boolean>(props: CommonSelec
     return {
       menu: {
         marginBlock: 0,
+        zIndex: 100,
       }
     }
   }, [theme])

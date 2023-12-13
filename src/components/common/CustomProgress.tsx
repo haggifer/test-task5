@@ -14,20 +14,23 @@ export default function CustomProgress({ type, containerClassName, containerSx, 
     <Box
       className={containerClassName}
       sx={{
+        display: 'flex',
+        alignItems: 'center',
         ...(
           type === 'page' ?
           {
-            display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
           } : {}
         ),
         ...(containerSx || {}),
       }}
     >
       <CircularProgress
-        size={type === 'button' ? 16 : undefined}
+        size={progressProps?.size || (type === 'button' ? 16 : undefined)}
         {...(progressProps || {})}
+        sx={{
+          ...(progressProps?.sx || {}),
+        }}
       />
     </Box>
   )
