@@ -1,7 +1,7 @@
 import _ from "lodash"
-import { FileDataType, IFile, IFolder } from "typescript/entities"
+import { FileDataList, IFile, IFolder } from "typescript/entities"
 
-export const getFilteredFiles = (data: FileDataType, search: string): IFile[] => {
+export const getFilteredFiles = (data: FileDataList, search: string): IFile[] => {
   if (!search) {
     return []
   }
@@ -39,7 +39,7 @@ export const getFilteredFolderFiles = (folder: IFolder, search: string): IFile[]
   return [...subFiles.flat(2), ...files]
 }
 
-export const getFilteredData = (data: FileDataType, search: string): FileDataType | null => {
+export const getFilteredData = (data: FileDataList, search: string): FileDataList | null => {
   if (!search) {
     return data
   }

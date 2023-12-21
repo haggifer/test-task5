@@ -1,4 +1,4 @@
-import { FileDataType, IFolder } from 'typescript/entities';
+import { FileDataList, IFolder } from 'typescript/entities';
 import {
   getFilteredData,
   getFilteredFiles,
@@ -6,7 +6,7 @@ import {
   getFilteredFolderFiles
 } from './files';
 
-const mockData: FileDataType = [
+const mockData: FileDataList = [
   { id: Math.round(Math.random() * 10**8), type: 'folder', name: 'topFolder' },
   { id: Math.round(Math.random() * 10**8), type: 'folder', name: 'topFolder2' },
   { id: Math.round(Math.random() * 10**8), type: 'file', name: 'topFile1' },

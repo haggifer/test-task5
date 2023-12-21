@@ -1,20 +1,20 @@
-export interface IFile {
-  id: number,
+export interface IEntity {
+  id: number;
+  name: string;
+  access?: 'all' | 'admin';
+}
+
+export interface IFile extends IEntity {
   type: 'file',
-  name: string,
-  access?: 'all' | 'admin',
 }
 
-export interface IFolder {
-  id: number,
+export interface IFolder extends IEntity {
   type: 'folder',
-  name: string,
-  folders?: IFolder[],
-  files?: IFile[],
-  access?: 'all' | 'admin',
+  folders?: number[],
+  files?: number[],
 }
 
-export type FileDataType = (IFolder | IFile)[]
+export type FileDataList = (IFolder | IFile)[]
 
 export interface IUser {
   id: number,

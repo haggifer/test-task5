@@ -1,14 +1,14 @@
 import { MongoAbility } from "@casl/ability";
 import { Box, Typography } from "@mui/material";
-import { ReactElement, useContext, useMemo } from "react";
-import { useFileStore } from "stores/fileStore";
-import { FileDataType, IFile, IFolder } from "typescript/entities";
-import FileTreeItem from "./FileTreeItem";
 import { AbilityContext } from "components/layout/PageLayout/PageLayout";
 import _ from "lodash";
+import { ReactElement, useContext, useMemo } from "react";
+import { useFileStore } from "stores/fileStore";
+import { FileDataList, IFile, IFolder } from "typescript/entities";
+import FileTreeItem from "./FileTreeItem";
 
 interface IProps {
-  data: FileDataType,
+  data: FileDataList,
 }
 
 export default function FileTree({ data }: IProps): ReactElement {
@@ -53,12 +53,28 @@ export default function FileTree({ data }: IProps): ReactElement {
 
         {
           folder.folders && open.includes(folder.id) &&
-          folder.folders.map(folder => renderFolder(folder, level + 1, [...parentIds, folder.id], folder.access || parentAccess))
+          folder.folders.map(folderId => {
+            const folder = data.find(item => item.id === folderId) as IFolder | undefined
+
+            if (!folder) {
+              return <></>
+            }
+
+            return renderFolder(folder, level + 1, [...parentIds, folder.id], folder.access || parentAccess)
+          })
         }
 
         {
           folder.files && open.includes(folder.id) &&
-          folder.files.map(file => renderFile(file, level + 1, [...parentIds, folder.id], folder.access || parentAccess))
+          folder.files.map(fileId => {
+            const file = data.find(item => item.id === fileId) as IFile | undefined
+
+            if (!file) {
+              return <></>
+            }
+
+            return renderFile(file, level + 1, [...parentIds, file.id], file.access || parentAccess)
+          })
         }
       </Box>
     )

@@ -1,6 +1,6 @@
 import { CssBaseline } from "@mui/material";
 import { StyledEngineProvider } from '@mui/material/styles';
-import { ReactElement } from 'react';
+import { Profiler, ReactElement } from 'react';
 import { RouterProvider } from "react-router-dom";
 import './assets/scss/index.scss';
 import CustomProgress from "./components/common/CustomProgress";

@@ -1,8 +1,8 @@
-import { FileDataType } from "typescript/entities";
+import { FileDataList } from "typescript/entities";
 import { create } from "zustand";
 
 export interface IFileStore {
-  data: FileDataType | null,
+  data: FileDataList | null,
   active: number | null,
   open: number[],
   search: {

@@ -10,7 +10,7 @@ import { useFileStore } from 'stores/fileStore';
 import { useUserStore } from 'stores/userStore';
 import useSWR, { useSWRConfig } from 'swr';
 import { ISelectOption } from 'typescript/common';
-import { FileDataType } from 'typescript/entities';
+import { FileDataList } from 'typescript/entities';
 import { getFilteredData, getFilteredFiles } from 'utils/helpers/files';
 import FileFilters from './FileFilters';
 
@@ -18,17 +18,18 @@ export default function Home(): ReactElement {
   const { data, search, setData, setActive, setOpen } = useFileStore()
   const { users, current, setCurrent } = useUserStore()
 
-  const dataToView = useMemo<FileDataType | null>(() => {    
-    if (!search.value || !data) {
-      return data
-    }
+  const dataToView = useMemo<FileDataList | null>(() => {    
+    return data
+    // if (!search.value || !data) {
+    //   return data
+    // }
 
-    switch(search.type) {
-      case 'byStructure':
-        return getFilteredData(data, search.value)
-      case 'byFiles':
-        return getFilteredFiles(data, search.value)
-    }
+    // switch(search.type) {
+    //   case 'byStructure':
+    //     return getFilteredData(data, search.value)
+    //   case 'byFiles':
+    //     return getFilteredFiles(data, search.value)
+    // }
   }, [data, search])
 
   const userOptions = useMemo<ISelectOption<number>[]>(() => {
@@ -44,7 +45,7 @@ export default function Home(): ReactElement {
     data: apiData,
     error,
     isLoading,
-  } = useSWR<FileDataType>('/files', mockFilesFetcher, {
+  } = useSWR<FileDataList>('/files', mockFilesFetcher, {
     revalidateOnFocus: false,
   })
 

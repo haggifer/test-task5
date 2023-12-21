@@ -1,6 +1,6 @@
 import axios from "axios";
 import { localFileData, localUsers } from "../utils/localData";
-import { FileDataType, IUser } from "../typescript/entities";
+import { FileDataList, IUser } from "../typescript/entities";
 
 export interface ISerializableError {
   name: string,
@@ -37,7 +37,7 @@ export const filesFetcher = async (url: string) => {
     .then((res) => res.data)
 }
 
-export const mockFilesFetcher = (): Promise<FileDataType> => new Promise((resolve) => {
+export const mockFilesFetcher = (): Promise<FileDataList> => new Promise((resolve) => {
   setTimeout(() => {
     // reject(Error('Error message'))
     resolve(localFileData);
