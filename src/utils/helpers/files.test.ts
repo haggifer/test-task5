@@ -1,52 +1,79 @@
 import { FileDataList, IFolder } from 'typescript/entities';
-import {
-  getFilteredData,
-  getFilteredFiles,
-  getFilteredFolder,
-  getFilteredFolderFiles
-} from './files';
+import { getFilteredData, getFilteredFiles, getFilteredFolder, getFilteredFolderFiles, } from './files';
 
 const mockData: FileDataList = [
-  { id: Math.round(Math.random() * 10**8), type: 'folder', name: 'topFolder' },
-  { id: Math.round(Math.random() * 10**8), type: 'folder', name: 'topFolder2' },
-  { id: Math.round(Math.random() * 10**8), type: 'file', name: 'topFile1' },
-  { id: Math.round(Math.random() * 10**8), type: 'file', name: 'topFile2' },
   {
-    id: Math.round(Math.random() * 10**8),
+    id: Math.round(Math.random() * 10 ** 8),
+    type: 'folder',
+    name: 'topFolder',
+  },
+  {
+    id: Math.round(Math.random() * 10 ** 8),
+    type: 'folder',
+    name: 'topFolder2',
+  },
+  { id: Math.round(Math.random() * 10 ** 8), type: 'file', name: 'topFile1' },
+  { id: Math.round(Math.random() * 10 ** 8), type: 'file', name: 'topFile2' },
+  {
+    id: Math.round(Math.random() * 10 ** 8),
     type: 'folder',
     name: 'topFolder3',
     folders: [
-      { id: Math.round(Math.random() * 10**8), type: 'folder', name: 'subFolder1' },
-      { 
-        id: Math.round(Math.random() * 10**8), 
+      {
+        id: Math.round(Math.random() * 10 ** 8),
+        type: 'folder',
+        name: 'subFolder1',
+      },
+      {
+        id: Math.round(Math.random() * 10 ** 8),
         type: 'folder',
         name: 'subFolder2',
         folders: [
-          { id: Math.round(Math.random() * 10**8), type: 'folder', name: 'subSubFolder1' },
-          { id: Math.round(Math.random() * 10**8), type: 'folder', name: 'subSubFolder2' },
+          {
+            id: Math.round(Math.random() * 10 ** 8),
+            type: 'folder',
+            name: 'subSubFolder1',
+          },
+          {
+            id: Math.round(Math.random() * 10 ** 8),
+            type: 'folder',
+            name: 'subSubFolder2',
+          },
         ],
       },
-      { 
-        id: Math.round(Math.random() * 10**8), 
+      {
+        id: Math.round(Math.random() * 10 ** 8),
         type: 'folder',
         name: 'subFolder3',
         files: [
-          { id: Math.round(Math.random() * 10**8), type: 'file', name: 'subSubFile1' },
-          { id: Math.round(Math.random() * 10**8), type: 'file', name: 'subSubFile2' },
+          {
+            id: Math.round(Math.random() * 10 ** 8),
+            type: 'file',
+            name: 'subSubFile1',
+          },
+          {
+            id: Math.round(Math.random() * 10 ** 8),
+            type: 'file',
+            name: 'subSubFile2',
+          },
         ],
       },
     ],
     files: [
-      { id: Math.round(Math.random() * 10**8), type: 'file', name: 'subFile1' },
-    ]
+      {
+        id: Math.round(Math.random() * 10 ** 8),
+        type: 'file',
+        name: 'subFile1',
+      },
+    ],
   },
 ];
 
 const addArrayAssertions = (currentArr: unknown[], testedArr: unknown[]) => {
   expect(currentArr).toHaveLength(testedArr.length);
 
-  currentArr.forEach(item => expect(testedArr).toContainEqual(item))
-}
+  currentArr.forEach((item) => expect(testedArr).toContainEqual(item));
+};
 
 describe('getFilteredFolderFiles', () => {
   const mockFolder = mockData[4] as IFolder;
@@ -63,9 +90,9 @@ describe('getFilteredFolderFiles', () => {
     const expectedResult = [
       { id: expect.any(Number), type: 'file', name: 'subSubFile1' },
       { id: expect.any(Number), type: 'file', name: 'subSubFile2' },
-    ]
-    
-    addArrayAssertions(expectedResult, result)
+    ];
+
+    addArrayAssertions(expectedResult, result);
   });
 });
 
@@ -85,9 +112,9 @@ describe('getFilteredFiles', () => {
       { id: expect.any(Number), type: 'file', name: 'subFile1' },
       { id: expect.any(Number), type: 'file', name: 'subSubFile1' },
       { id: expect.any(Number), type: 'file', name: 'subSubFile2' },
-    ]
-    
-    addArrayAssertions(expectedResult, result)
+    ];
+
+    addArrayAssertions(expectedResult, result);
   });
 });
 
@@ -107,8 +134,8 @@ describe('getFilteredFolder', () => {
       type: 'folder',
       name: 'topFolder3',
       folders: [
-        { 
-          id: expect.any(Number), 
+        {
+          id: expect.any(Number),
           type: 'folder',
           name: 'subFolder3',
           files: [
@@ -117,9 +144,7 @@ describe('getFilteredFolder', () => {
           ],
         },
       ],
-      files: [
-        { id: expect.any(Number), type: 'file', name: 'subFile1' },
-      ]
+      files: [{ id: expect.any(Number), type: 'file', name: 'subFile1' }],
     };
 
     expect(result).toEqual(expectedResult);

@@ -1,27 +1,27 @@
-import { FileDataList, IUser } from "typescript/entities";
+import { FileDataList, IUser } from 'typescript/entities';
 
 export const localUsers: IUser[] = [
   {
-    id: Math.round(Math.random() * 10**8),
+    id: Math.round(Math.random() * 10 ** 8),
     name: 'Admin 1',
     role: 'admin',
   },
   {
-    id: Math.round(Math.random() * 10**8),
+    id: Math.round(Math.random() * 10 ** 8),
     name: 'Admin 2',
     role: 'admin',
   },
   {
-    id: Math.round(Math.random() * 10**8),
+    id: Math.round(Math.random() * 10 ** 8),
     name: 'User 1',
     role: 'user',
   },
   {
-    id: Math.round(Math.random() * 10**8),
+    id: Math.round(Math.random() * 10 ** 8),
     name: 'User 2',
     role: 'user',
   },
-]
+];
 
 export const localFileData: FileDataList = {
   data: [
@@ -107,7 +107,7 @@ export const localFileData: FileDataList = {
       type: 'folder',
       name: 'admin',
       access: 'admin',
-      folders: [14]
+      folders: [14],
     },
     {
       id: 16,
@@ -128,4 +128,4 @@ export const localFileData: FileDataList = {
     },
   ],
   display: [1, 2, 3, 4, 5, 6, 15, 18],
-}
+};

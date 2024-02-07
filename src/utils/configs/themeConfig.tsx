@@ -1,30 +1,30 @@
-import { Color } from "@mui/material";
-import { ThemeOptions } from "@mui/material/styles";
+import { Color } from '@mui/material';
+import { ThemeOptions } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
   interface Theme {
-    palette: Palette,
+    palette: Palette;
     extra: {
-      headerHeight: number,
-      footerHeight: number,
-      maxContentWidth: number,
-    },
+      headerHeight: number;
+      footerHeight: number;
+      maxContentWidth: number;
+    };
   }
 
   interface ThemeOptions {
-    palette?: PaletteOptions,
+    palette?: PaletteOptions;
     extra?: {
-      headerHeight: number,
-      maxContentWidth: number,
-    },
+      headerHeight: number;
+      maxContentWidth: number;
+    };
   }
 
   interface Palette {
-    primarySpectrum: Omit<Color, 'A100' | 'A200' | 'A400' | 'A700'>,
+    primarySpectrum: Omit<Color, 'A100' | 'A200' | 'A400' | 'A700'>;
   }
 
   interface PaletteOptions {
-    primarySpectrum?: Omit<Color, 'A100' | 'A200' | 'A400' | 'A700'>,
+    primarySpectrum?: Omit<Color, 'A100' | 'A200' | 'A400' | 'A700'>;
   }
 }
 
@@ -65,5 +65,5 @@ export const themeConfig: ThemeOptions = {
   extra: {
     headerHeight: 100,
     maxContentWidth: 1200,
-  }
-}
+  },
+};

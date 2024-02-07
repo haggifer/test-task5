@@ -1,25 +1,27 @@
-import { Box, TextField } from "@mui/material";
-import { CommonSelect } from "components/common/CommonSelect";
+import { Box, TextField } from '@mui/material';
+import { CommonSelect } from 'components/common/CommonSelect';
 import { useFormik } from 'formik';
-import { ReactElement, useEffect, useState } from "react";
-import { IFileStore, useFileStore } from "stores/fileStore";
-import { ISelectOption } from "typescript/common";
-import { useDebounce } from "usehooks-ts";
+import { ReactElement, useEffect, useState } from 'react';
+import { IFileStore, useFileStore } from 'stores/fileStore';
+import { ISelectOption } from 'typescript/common';
+import { useDebounce } from 'usehooks-ts';
 import * as yup from 'yup';
 
 interface IProps {
-  disabled?: boolean,
+  disabled?: boolean;
 }
 
 interface IFiltersValues {
-  search: string,
-  searchType: ISelectOption<IFileStore['search']['type']>,
+  search: string;
+  searchType: ISelectOption<IFileStore['search']['type']>;
 }
 
 export default function FileFilters({ disabled }: IProps): ReactElement {
-  const { search, setSearch } = useFileStore()
+  const { search, setSearch } = useFileStore();
 
-  const [searchTypeOptions] = useState<ISelectOption<IFileStore['search']['type']>[]>([
+  const [searchTypeOptions] = useState<
+    ISelectOption<IFileStore['search']['type']>[]
+  >([
     {
       label: 'By structure',
       value: 'byStructure',
@@ -28,61 +30,61 @@ export default function FileFilters({ disabled }: IProps): ReactElement {
       label: 'By files',
       value: 'byFiles',
     },
-  ])
+  ]);
 
   const [initFiltersValues] = useState<IFiltersValues>({
     search: '',
     searchType: searchTypeOptions[0],
-  })
+  });
 
-  const [validationSchema] = useState(yup.object({}))
+  const [validationSchema] = useState(yup.object({}));
 
-  const {
-    values,
-    handleChange,
-    setFieldValue,
-  } =
-    useFormik({
-      validationSchema: validationSchema,
-      onSubmit: () => {
-      },
-      initialValues: initFiltersValues,
-      enableReinitialize: true,
-    });
+  const { values, handleChange, setFieldValue } = useFormik({
+    validationSchema: validationSchema,
+    onSubmit: () => {
+    },
+    initialValues: initFiltersValues,
+    enableReinitialize: true,
+  });
 
-  const debouncedSearchValue = useDebounce<string>(values.search, 400)
-
-  useEffect(() => {    
-    setFieldValue('search', search.value)
-  }, [search.value])
+  const debouncedSearchValue = useDebounce<string>(values.search, 400);
 
   useEffect(() => {
-    setFieldValue('searchType', searchTypeOptions.find(option => option.value === search.type))
-  }, [search.type])
+    setFieldValue('search', search.value);
+  }, [search.value]);
+
+  useEffect(() => {
+    setFieldValue(
+      'searchType',
+      searchTypeOptions.find((option) => option.value === search.type),
+    );
+  }, [search.type]);
 
   useEffect(() => {
     setSearch({
       ...search,
       value: debouncedSearchValue,
-    })
-  }, [debouncedSearchValue])
+    });
+  }, [debouncedSearchValue]);
 
   useEffect(() => {
     setSearch({
       ...search,
       type: values.searchType.value,
-    })
-  }, [values.searchType])
+    });
+  }, [values.searchType]);
 
   return (
-    <Box sx={{
-      display: 'flex',
-      alignItems: 'center',
-      mb: 3,
-      '> *:not(:last-child)': {
-        mr: 2,
-      }
-    }}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        mb: 3,
+        '> *:not(:last-child)': {
+          mr: 2,
+        },
+      }}
+    >
       <TextField
         type="text"
         name="search"
@@ -93,12 +95,12 @@ export default function FileFilters({ disabled }: IProps): ReactElement {
         placeholder="Search"
         label="Search"
       />
-      
+
       <CommonSelect<string, false>
         name="type"
         value={values.searchType}
         isDisabled={disabled}
-        onChange={newValue => setFieldValue('searchType', newValue)}
+        onChange={(newValue) => setFieldValue('searchType', newValue)}
         options={searchTypeOptions}
         styles={{
           control: {
@@ -113,5 +115,5 @@ export default function FileFilters({ disabled }: IProps): ReactElement {
         }}
       />
     </Box>
-  )
+  );
 }

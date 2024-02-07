@@ -5,19 +5,19 @@ export interface IEntity {
 }
 
 export interface IFile extends IEntity {
-  type: 'file',
+  type: 'file';
 }
 
 export interface IFolder extends IEntity {
-  type: 'folder',
-  folders?: number[],
-  files?: number[],
+  type: 'folder';
+  folders?: number[];
+  files?: number[];
 }
 
-export type FileDataList = (IFolder | IFile)[]
+export type FileDataList = (IFolder | IFile)[];
 
 export interface IUser {
-  id: number,
-  name: string,
-  role: 'user' | 'admin',
+  id: number;
+  name: string;
+  role: 'user' | 'admin';
 }

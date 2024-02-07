@@ -1,27 +1,31 @@
-import React, { ReactElement } from "react";
-import { Box, CircularProgress, SxProps } from "@mui/material";
-import { CircularProgressProps } from "@mui/material/CircularProgress/CircularProgress";
+import React, { ReactElement } from 'react';
+import { Box, CircularProgress, SxProps } from '@mui/material';
+import { CircularProgressProps } from '@mui/material/CircularProgress/CircularProgress';
 
 interface IProps {
-  type: 'page' | 'button',
+  type: 'page' | 'button';
   containerClassName?: string;
   containerSx?: SxProps;
   progressProps?: CircularProgressProps;
 }
 
-export default function CustomProgress({ type, containerClassName, containerSx, progressProps }: IProps): ReactElement {
+export default function CustomProgress({
+                                         type,
+                                         containerClassName,
+                                         containerSx,
+                                         progressProps,
+                                       }: IProps): ReactElement {
   return (
     <Box
       className={containerClassName}
       sx={{
         display: 'flex',
         alignItems: 'center',
-        ...(
-          type === 'page' ?
-          {
+        ...(type === 'page'
+          ? {
             justifyContent: 'center',
-          } : {}
-        ),
+          }
+          : {}),
         ...(containerSx || {}),
       }}
     >
@@ -33,5 +37,5 @@ export default function CustomProgress({ type, containerClassName, containerSx, 
         }}
       />
     </Box>
-  )
+  );
 }
