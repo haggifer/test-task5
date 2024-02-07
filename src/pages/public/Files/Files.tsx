@@ -10,26 +10,33 @@ import { useFileStore } from 'stores/fileStore';
 import { useUserStore } from 'stores/userStore';
 import useSWR, { useSWRConfig } from 'swr';
 import { ISelectOption } from 'typescript/common';
-import { FileDataList } from 'typescript/entities';
+import { FileData } from 'typescript/entities';
 import FileFilters from './FileFilters';
+import { getFilteredFiles } from "../../../utils/helpers/files";
 
 export default function Home(): ReactElement {
   const { data, search, setData, setActive, setOpen } = useFileStore();
   const { users, current, setCurrent } = useUserStore();
 
-  const dataToView = useMemo<FileDataList | null>(() => {
-    return data;
-    // if (!search.value || !data) {
-    //   return data
-    // }
+  const dataToView = useMemo<FileData | null>(() => {
+    if (!search.value || !data) {
+      return data
+    }
 
-    // switch(search.type) {
-    //   case 'byStructure':
-    //     return getFilteredData(data, search.value)
-    //   case 'byFiles':
-    //     return getFilteredFiles(data, search.value)
-    // }
+    switch(search.type) {
+      // case 'byStructure':
+      //   return getFilteredData(data, search.value)
+      case 'byFiles':
+        return {
+          ...data,
+          data: getFilteredFiles(data.data, search.value),
+          display: null,
+        }
+      default:
+        return data
+    }
   }, [data, search]);
+  console.log(dataToView)
 
   const userOptions = useMemo<ISelectOption<number>[]>(() => {
     return !users
@@ -44,11 +51,10 @@ export default function Home(): ReactElement {
     data: apiData,
     error,
     isLoading,
-  } = useSWR<FileDataList>('/files', mockFilesFetcher, {
+  } = useSWR<FileData>('/files', mockFilesFetcher, {
     revalidateOnFocus: false,
   });
 
-  // implemented to properly handle loading state of swr for both automatic and manual fetching
   const [swrLoading, setSwrLoading] = useState<boolean>(false);
 
   const { mutate } = useSWRConfig();
@@ -134,7 +140,7 @@ export default function Home(): ReactElement {
         <Alert severity="error">{(error as ISerializableError).message}</Alert>
       ) : !dataToView && swrLoading ? (
         <CustomProgress type="page"/>
-      ) : !dataToView?.length ? (
+      ) : !dataToView?.data.length ? (
         <Typography
           variant="body1"
           sx={{

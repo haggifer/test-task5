@@ -1,14 +1,14 @@
 import { MongoAbility } from '@casl/ability';
 import { Box, Typography } from '@mui/material';
 import { AbilityContext } from 'components/layout/PageLayout/PageLayout';
-import _ from 'lodash';
 import { ReactElement, useContext, useMemo } from 'react';
 import { useFileStore } from 'stores/fileStore';
-import { FileDataList, IFile, IFolder } from 'typescript/entities';
+import { FileData, IFile, IFolder } from 'typescript/entities';
 import FileTreeItem from './FileTreeItem';
+import { getSortedEntities } from "../../../utils/helpers/files";
 
 interface IProps {
-  data: FileDataList;
+  data: FileData;
 }
 
 export default function FileTree({ data }: IProps): ReactElement {
@@ -19,13 +19,11 @@ export default function FileTree({ data }: IProps): ReactElement {
   const renderFile = (
     file: IFile,
     level: number,
-    parentIds: number[],
     parentAccess: IFile['access'],
   ) => {
     const fileAccess = file.access || parentAccess;
 
     if (
-      fileAccess &&
       fileAccess === 'admin' &&
       ability.cannot('read', 'adminData')
     ) {
@@ -52,7 +50,6 @@ export default function FileTree({ data }: IProps): ReactElement {
     const folderAccess = folder.access || parentAccess;
 
     if (
-      folderAccess &&
       folderAccess === 'admin' &&
       ability.cannot('read', 'adminData')
     ) {
@@ -71,17 +68,9 @@ export default function FileTree({ data }: IProps): ReactElement {
 
         {folder.folders &&
           open.includes(folder.id) &&
-          folder.folders.map((folderId) => {
-            const folder = data.find((item) => item.id === folderId) as
-              | IFolder
-              | undefined;
-
-            if (!folder) {
-              return <></>;
-            }
-
+          getSortedEntities(folder.folders, data.data).map((folder) => {
             return renderFolder(
-              folder,
+              folder as IFolder,
               level + 1,
               [...parentIds, folder.id],
               folder.access || parentAccess,
@@ -90,19 +79,10 @@ export default function FileTree({ data }: IProps): ReactElement {
 
         {folder.files &&
           open.includes(folder.id) &&
-          folder.files.map((fileId) => {
-            const file = data.find((item) => item.id === fileId) as
-              | IFile
-              | undefined;
-
-            if (!file) {
-              return <></>;
-            }
-
+          getSortedEntities(folder.files, data.data).map((file) => {
             return renderFile(
-              file,
+              file as IFile,
               level + 1,
-              [...parentIds, file.id],
               file.access || parentAccess,
             );
           })}
@@ -111,14 +91,15 @@ export default function FileTree({ data }: IProps): ReactElement {
   };
 
   const content = useMemo(
-    () =>
-      _.compact(
-        data?.map((item) =>
-          item.type === 'folder'
-            ? renderFolder(item, 0, [], item.access)
-            : renderFile(item, 0, [], item.access),
-        ),
-      ),
+    () => {
+      const sortedEntities = getSortedEntities(data.display, data.data)
+
+      return sortedEntities.map(entity => {
+        return entity && entity.type === 'folder'
+          ? renderFolder(entity, 0, [], entity.access)
+          : renderFile(entity, 0, entity.access)
+      })
+    },
     [data, open, ability],
   );
 

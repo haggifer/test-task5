@@ -1,7 +1,9 @@
+export type EntityAccess = 'admin'
+
 export interface IEntity {
   id: number;
   name: string;
-  access?: 'all' | 'admin';
+  access?: EntityAccess;
 }
 
 export interface IFile extends IEntity {
@@ -14,7 +16,10 @@ export interface IFolder extends IEntity {
   files?: number[];
 }
 
-export type FileDataList = (IFolder | IFile)[];
+export type FileData = {
+  data: (IFolder | IFile)[],
+  display: number[] | null,
+};
 
 export interface IUser {
   id: number;

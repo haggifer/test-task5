@@ -6,7 +6,7 @@ import MovieCreationOutlinedIcon from '@mui/icons-material/MovieCreationOutlined
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import TextFieldsOutlinedIcon from '@mui/icons-material/TextFieldsOutlined';
 import { Box, Typography } from '@mui/material';
-import { ReactElement, useMemo } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { useFileStore } from 'stores/fileStore';
 import { FileTypes, fileTypes } from 'utils/fileTypes';
 
@@ -18,13 +18,15 @@ interface IProps {
   empty?: boolean;
 }
 
-export default function FileTreeItem({
-                                       id,
-                                       name,
-                                       type,
-                                       level,
-                                       empty,
-                                     }: IProps): ReactElement {
+export default function FileTreeItem(
+  {
+    id,
+    name,
+    type,
+    level,
+    empty,
+  }: IProps
+): ReactElement {
   const { active, open, setActive, setOpen } = useFileStore();
 
   const ItemIcon = useMemo<React.FC>(() => {

@@ -1,8 +1,8 @@
-import { FileDataList } from 'typescript/entities';
+import { FileData } from 'typescript/entities';
 import { create } from 'zustand';
 
 export interface IFileStore {
-  data: FileDataList | null;
+  data: FileData | null;
   setData: (newData: IFileStore['data']) => void;
   active: number | null;
   setActive: (newValue: IFileStore['active']) => void;

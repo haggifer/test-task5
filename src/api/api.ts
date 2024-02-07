@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { localFileData, localUsers } from '../utils/localData';
-import { FileDataList, IUser } from '../typescript/entities';
+import { localFileData, localUsers } from '../localData';
+import { FileData, IUser } from '../typescript/entities';
 
 export interface ISerializableError {
   name: string;
@@ -39,10 +39,9 @@ export const filesFetcher = async (url: string) => {
   return apiProvider.get(url).then((res) => res.data);
 };
 
-export const mockFilesFetcher = (): Promise<FileDataList> =>
+export const mockFilesFetcher = (): Promise<FileData> =>
   new Promise((resolve) => {
     setTimeout(() => {
-      // reject(Error('Error message'))
       resolve(localFileData);
     }, 1000);
   });
@@ -54,7 +53,6 @@ export const usersFetcher = async (url: string) => {
 export const mockUsersFetcher = (): Promise<IUser[]> =>
   new Promise((resolve) => {
     setTimeout(() => {
-      // reject(Error('Error message'))
       resolve(localUsers);
     }, 1000);
   });

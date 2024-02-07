@@ -1,4 +1,4 @@
-import { FileDataList, IUser } from 'typescript/entities';
+import { FileData, IUser } from 'typescript/entities';
 
 export const localUsers: IUser[] = [
   {
@@ -23,7 +23,7 @@ export const localUsers: IUser[] = [
   },
 ];
 
-export const localFileData: FileDataList = {
+export const localFileData: FileData = {
   data: [
     {
       id: 1,
