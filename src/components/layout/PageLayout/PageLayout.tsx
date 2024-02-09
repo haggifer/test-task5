@@ -1,7 +1,7 @@
 import { MongoAbility } from '@casl/ability';
 import { Alert, Box, useMediaQuery, useTheme } from '@mui/material';
 import { mockUsersFetcher } from 'api/api';
-import CustomProgress from 'components/common/CustomProgress';
+import CustomProgress from 'components/common/CustomProgress/CustomProgress';
 import { createContext, ReactElement, useEffect } from 'react';
 import { Outlet } from 'react-router';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -47,7 +47,7 @@ export default function PageLayout(): ReactElement {
 
   return (
     <>
-      <Header/>
+      <Header />
 
       <Box
         component="main"
@@ -65,20 +65,20 @@ export default function PageLayout(): ReactElement {
             marginRight: 'auto',
             ...(isXs
               ? {
-                padding: '15px',
-              }
+                  padding: '15px',
+                }
               : {
-                padding: '15px 20px',
-              }),
+                  padding: '15px 20px',
+                }),
           })}
         >
           {error && !isLoading ? (
             <Alert severity="error">Fetching users error</Alert>
           ) : isLoading ? (
-            <CustomProgress type="page"/>
+            <CustomProgress type="page" />
           ) : (
             <AbilityContext.Provider value={defineAbilityFor(current)}>
-              <Outlet/>
+              <Outlet />
             </AbilityContext.Provider>
           )}
         </Box>

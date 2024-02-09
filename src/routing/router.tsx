@@ -5,7 +5,7 @@ import { serviceRoutes } from './routes/serviceRoutes';
 
 export const router = createBrowserRouter([
   {
-    element: <PageLayout/>,
+    element: <PageLayout />,
     path: '/',
     children: [...publicRoutes, ...serviceRoutes],
   },

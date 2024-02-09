@@ -10,11 +10,11 @@ interface IProps {
 }
 
 export default function CustomProgress({
-                                         type,
-                                         containerClassName,
-                                         containerSx,
-                                         progressProps,
-                                       }: IProps): ReactElement {
+  type,
+  containerClassName,
+  containerSx,
+  progressProps,
+}: IProps): ReactElement {
   return (
     <Box
       className={containerClassName}
@@ -23,8 +23,8 @@ export default function CustomProgress({
         alignItems: 'center',
         ...(type === 'page'
           ? {
-            justifyContent: 'center',
-          }
+              justifyContent: 'center',
+            }
           : {}),
         ...(containerSx || {}),
       }}

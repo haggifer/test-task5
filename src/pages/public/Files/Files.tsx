@@ -1,50 +1,45 @@
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Alert, Box, Divider, IconButton, Typography } from '@mui/material';
 import { ISerializableError, mockFilesFetcher } from 'api/api';
-import { CommonSelect, defaultNumberSelectOption, } from 'components/common/CommonSelect';
-import CustomProgress from 'components/common/CustomProgress';
+import {
+  CommonSelect,
+  defaultNumberSelectOption,
+  ISelectOption,
+} from 'components/common/CommonSelect/CommonSelect';
 import _ from 'lodash';
 import FileTree from 'pages/public/Files/FileTree';
 import { ReactElement, useEffect, useMemo, useState } from 'react';
 import { useFileStore } from 'stores/fileStore';
 import { useUserStore } from 'stores/userStore';
 import useSWR, { useSWRConfig } from 'swr';
-import { ISelectOption } from 'typescript/common';
 import { FileData } from 'typescript/entities';
 import FileFilters from './FileFilters';
-import { getFilteredFiles } from "../../../utils/helpers/files";
+import { getFilteredFiles } from '../../../utils/helpers/files';
+import CustomProgress from '../../../components/common/CustomProgress/CustomProgress';
 
 export default function Home(): ReactElement {
   const { data, search, setData, setActive, setOpen } = useFileStore();
   const { users, current, setCurrent } = useUserStore();
 
   const dataToView = useMemo<FileData | null>(() => {
-    if (!search.value || !data) {
-      return data
+    if (!data || !search.value) {
+      return data;
     }
 
-    switch(search.type) {
-      // case 'byStructure':
-      //   return getFilteredData(data, search.value)
-      case 'byFiles':
-        return {
-          ...data,
-          data: getFilteredFiles(data.data, search.value),
-          display: null,
-        }
-      default:
-        return data
-    }
+    return {
+      ...data,
+      data: getFilteredFiles(data.data, search.value),
+      display: null,
+    };
   }, [data, search]);
-  console.log(dataToView)
 
   const userOptions = useMemo<ISelectOption<number>[]>(() => {
     return !users
       ? [defaultNumberSelectOption]
       : users.map((user) => ({
-        label: `${user.name} (${_.capitalize(user.role)})`,
-        value: user.id,
-      }));
+          label: `${user.name} (${_.capitalize(user.role)})`,
+          value: user.id,
+        }));
   }, [users]);
 
   const {
@@ -119,7 +114,7 @@ export default function Home(): ReactElement {
           alignItems: 'center',
         }}
       >
-        <FileFilters disabled={false}/>
+        <FileFilters disabled={swrLoading} />
 
         <Box
           sx={{
@@ -128,10 +123,10 @@ export default function Home(): ReactElement {
           }}
         >
           {dataToView && swrLoading && (
-            <CustomProgress type="button" progressProps={{ size: 17 }}/>
+            <CustomProgress type="button" progressProps={{ size: 17 }} />
           )}
           <IconButton onClick={refetchData} sx={{ ml: 2 }} title="Refresh data">
-            <RefreshIcon/>
+            <RefreshIcon />
           </IconButton>
         </Box>
       </Box>
@@ -139,7 +134,7 @@ export default function Home(): ReactElement {
       {error ? (
         <Alert severity="error">{(error as ISerializableError).message}</Alert>
       ) : !dataToView && swrLoading ? (
-        <CustomProgress type="page"/>
+        <CustomProgress type="page" />
       ) : !dataToView?.data.length ? (
         <Typography
           variant="body1"
@@ -150,7 +145,7 @@ export default function Home(): ReactElement {
           Nothing found
         </Typography>
       ) : (
-        <FileTree data={dataToView}/>
+        <FileTree data={dataToView} />
       )}
     </>
   );

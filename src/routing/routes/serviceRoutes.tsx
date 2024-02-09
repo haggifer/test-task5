@@ -5,6 +5,6 @@ import NotFound from '../../pages/service/NotFound/NotFound';
 export const serviceRoutes: RouteObject[] = [
   {
     path: '/*',
-    element: <NotFound/>,
+    element: <NotFound />,
   },
 ];

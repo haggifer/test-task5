@@ -5,7 +5,7 @@ import { ReactElement, useContext, useMemo } from 'react';
 import { useFileStore } from 'stores/fileStore';
 import { FileData, IFile, IFolder } from 'typescript/entities';
 import FileTreeItem from './FileTreeItem';
-import { getSortedEntities } from "../../../utils/helpers/files";
+import { getSortedEntities } from '../../../utils/helpers/files';
 
 interface IProps {
   data: FileData;
@@ -23,10 +23,7 @@ export default function FileTree({ data }: IProps): ReactElement {
   ) => {
     const fileAccess = file.access || parentAccess;
 
-    if (
-      fileAccess === 'admin' &&
-      ability.cannot('read', 'adminData')
-    ) {
+    if (fileAccess === 'admin' && ability.cannot('read', 'adminData')) {
       return null;
     }
 
@@ -49,10 +46,7 @@ export default function FileTree({ data }: IProps): ReactElement {
   ) => {
     const folderAccess = folder.access || parentAccess;
 
-    if (
-      folderAccess === 'admin' &&
-      ability.cannot('read', 'adminData')
-    ) {
+    if (folderAccess === 'admin' && ability.cannot('read', 'adminData')) {
       return null;
     }
 
@@ -68,7 +62,7 @@ export default function FileTree({ data }: IProps): ReactElement {
 
         {folder.folders &&
           open.includes(folder.id) &&
-          getSortedEntities(folder.folders, data.data).map((folder) => {
+          getSortedEntities(data.data, folder.folders).map((folder) => {
             return renderFolder(
               folder as IFolder,
               level + 1,
@@ -79,7 +73,7 @@ export default function FileTree({ data }: IProps): ReactElement {
 
         {folder.files &&
           open.includes(folder.id) &&
-          getSortedEntities(folder.files, data.data).map((file) => {
+          getSortedEntities(data.data, folder.files).map((file) => {
             return renderFile(
               file as IFile,
               level + 1,
@@ -90,18 +84,15 @@ export default function FileTree({ data }: IProps): ReactElement {
     );
   };
 
-  const content = useMemo(
-    () => {
-      const sortedEntities = getSortedEntities(data.display, data.data)
+  const content = useMemo(() => {
+    const sortedEntities = getSortedEntities(data.data, data.display);
 
-      return sortedEntities.map(entity => {
-        return entity && entity.type === 'folder'
-          ? renderFolder(entity, 0, [], entity.access)
-          : renderFile(entity, 0, entity.access)
-      })
-    },
-    [data, open, ability],
-  );
+    return sortedEntities.map((entity) => {
+      return entity && entity.type === 'folder'
+        ? renderFolder(entity, 0, [], entity.access)
+        : renderFile(entity, 0, entity.access);
+    });
+  }, [data, open, ability]);
 
   return !content?.length ? (
     <Typography

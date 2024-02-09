@@ -79,21 +79,25 @@ export const localFileData: FileData = {
       id: 10,
       type: 'file',
       name: 'admin.jpg',
+      access: 'admin',
     },
     {
       id: 11,
       type: 'file',
       name: 'admin.avi',
+      access: 'admin',
     },
     {
       id: 12,
       type: 'file',
       name: 'admin.mp3',
+      access: 'admin',
     },
     {
       id: 13,
       type: 'file',
       name: 'admin.txt',
+      access: 'admin',
     },
     {
       id: 14,

@@ -5,29 +5,38 @@ export const getFilteredFiles = (
   data: FileData['data'],
   search: string,
 ): IFile[] => {
+  const allFiles: IFile[] = data.filter(
+    (item) => item.type === 'file',
+  ) as IFile[];
+
   if (!search) {
-    return [];
+    return allFiles;
   }
 
-  const allFiles: IFile[] = data.filter(item => item.type === 'file') as IFile[];
-  console.log(allFiles)
-
-  const filteredFiles = allFiles.filter(file => file.name.includes(search))
-  console.log(filteredFiles)
-
-  return _.sortBy(filteredFiles, ['name']);
+  return allFiles.filter((file) =>
+    file.name.toLowerCase().includes(search.toLowerCase()),
+  );
 };
 
-export const getSortedEntities = (ids: number[] | null, data: (IFolder | IFile)[]) => {
-  const entities = ids ?
-    _.compact(ids.map(id => data.find(entity => entity.id === id))) :
-    data
+export const getSortedEntities = (
+  data: (IFolder | IFile)[],
+  ids: number[] | null,
+): (IFolder | IFile)[] => {
+  const entities = ids
+    ? _.compact(ids.map((id) => data.find((entity) => entity.id === id)))
+    : data;
 
   return [
-    ..._.sortBy(entities.filter(entity => entity.type === 'folder'), 'name'),
-    ..._.sortBy(entities.filter(entity => entity.type === 'file'), 'name'),
-  ]
-}
+    ..._.sortBy(
+      entities.filter((entity) => entity.type === 'folder'),
+      'name',
+    ),
+    ..._.sortBy(
+      entities.filter((entity) => entity.type === 'file'),
+      'name',
+    ),
+  ];
+};
 
 // export const getFilteredData = (
 //   data: FileData,

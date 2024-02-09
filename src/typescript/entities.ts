@@ -1,4 +1,4 @@
-export type EntityAccess = 'admin'
+export type EntityAccess = 'admin';
 
 export interface IEntity {
   id: number;
@@ -17,8 +17,8 @@ export interface IFolder extends IEntity {
 }
 
 export type FileData = {
-  data: (IFolder | IFile)[],
-  display: number[] | null,
+  data: (IFolder | IFile)[];
+  display: number[] | null;
 };
 
 export interface IUser {

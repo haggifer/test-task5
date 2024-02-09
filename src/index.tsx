@@ -17,7 +17,7 @@ root.render(
           fetcher: filesFetcher,
         }}
       >
-        <App/>
+        <App />
       </SWRConfig>
     </ThemeProvider>
   </React.StrictMode>,

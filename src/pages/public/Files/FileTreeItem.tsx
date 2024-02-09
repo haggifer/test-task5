@@ -18,15 +18,13 @@ interface IProps {
   empty?: boolean;
 }
 
-export default function FileTreeItem(
-  {
-    id,
-    name,
-    type,
-    level,
-    empty,
-  }: IProps
-): ReactElement {
+export default function FileTreeItem({
+  id,
+  name,
+  type,
+  level,
+  empty,
+}: IProps): ReactElement {
   const { active, open, setActive, setOpen } = useFileStore();
 
   const ItemIcon = useMemo<React.FC>(() => {
@@ -93,13 +91,13 @@ export default function FileTreeItem(
         cursor: 'pointer',
         ...(active === id
           ? {
-            background: theme.palette.primarySpectrum[200],
-          }
+              background: theme.palette.primarySpectrum[200],
+            }
           : {
-            '&:hover': {
-              background: theme.palette.primarySpectrum[100],
-            },
-          }),
+              '&:hover': {
+                background: theme.palette.primarySpectrum[100],
+              },
+            }),
       })}
     >
       <Box
